@@ -117,13 +117,16 @@ export const MeaningsSection: React.FC<MeaningsSectionProps> = ({
 
                       {/* Synonyms & Antonyms for this sense */}
                       {defItem.synonyms && defItem.synonyms.length > 0 && (
-                        <div className="flex items-center gap-2 flex-wrap text-xs text-stone-500 pt-1">
-                          <span className="font-semibold text-stone-400">Synonyms:</span>
-                          {defItem.synonyms.slice(0, 6).map((syn) => (
+                        <div className="flex items-center gap-2 flex-wrap text-xs text-stone-600 pt-1.5">
+                          <span className="font-semibold text-emerald-800 text-[11px] uppercase tracking-wide font-mono">
+                            Synonyms:
+                          </span>
+                          {defItem.synonyms.map((syn) => (
                             <button
                               key={syn}
                               onClick={() => onWordClick(syn)}
-                              className="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200/60 font-sans cursor-pointer transition-colors"
+                              className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-900 hover:bg-emerald-100 border border-emerald-200/70 font-sans cursor-pointer transition-colors shadow-2xs text-xs font-medium"
+                              title={`Look up "${syn}"`}
                             >
                               {syn}
                             </button>
@@ -132,13 +135,16 @@ export const MeaningsSection: React.FC<MeaningsSectionProps> = ({
                       )}
 
                       {defItem.antonyms && defItem.antonyms.length > 0 && (
-                        <div className="flex items-center gap-2 flex-wrap text-xs text-stone-500 pt-1">
-                          <span className="font-semibold text-stone-400">Antonyms:</span>
-                          {defItem.antonyms.slice(0, 5).map((ant) => (
+                        <div className="flex items-center gap-2 flex-wrap text-xs text-stone-600 pt-1">
+                          <span className="font-semibold text-rose-800 text-[11px] uppercase tracking-wide font-mono">
+                            Antonyms:
+                          </span>
+                          {defItem.antonyms.map((ant) => (
                             <button
                               key={ant}
                               onClick={() => onWordClick(ant)}
-                              className="px-2 py-0.5 rounded bg-rose-50 text-rose-800 hover:bg-rose-100 border border-rose-200/60 font-sans cursor-pointer transition-colors"
+                              className="px-2 py-0.5 rounded-md bg-rose-50 text-rose-900 hover:bg-rose-100 border border-rose-200/70 font-sans cursor-pointer transition-colors shadow-2xs text-xs font-medium"
+                              title={`Look up antonym "${ant}"`}
                             >
                               {ant}
                             </button>

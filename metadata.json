@@ -1,6 +1,6 @@
 {
   "name": "English Collocation Dictionary",
-  "description": "An authoritative English-to-English dictionary featuring verified definitions, comprehensive collocations, authentic example sentences, audio pronunciation, and CEFR levels.",
+  "description": "An authoritative English-to-English dictionary featuring verified definitions, rich synonyms & thesaurus, comprehensive collocations, authentic example sentences, audio pronunciation, and CEFR levels.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

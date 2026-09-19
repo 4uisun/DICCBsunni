@@ -6,6 +6,7 @@ import { MeaningsSection } from "./components/MeaningsSection.js";
 import { CollocationsSection } from "./components/CollocationsSection.js";
 import { ExamplesSection } from "./components/ExamplesSection.js";
 import { WordFamilyAndNotes } from "./components/WordFamilyAndNotes.js";
+import { SynonymsSection } from "./components/SynonymsSection.js";
 import { SavedWordsModal } from "./components/SavedWordsModal.js";
 import { HistoryModal } from "./components/HistoryModal.js";
 import { DictionaryEntry, SearchHistoryItem } from "./types.js";
@@ -18,7 +19,8 @@ import {
   GitFork, 
   ShieldCheck, 
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Split
 } from "lucide-react";
 
 export default function App() {
@@ -29,7 +31,7 @@ export default function App() {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   
   // Section Navigation Tab (All in one view vs focused view)
-  const [viewTab, setViewTab] = useState<"all" | "definitions" | "collocations" | "examples" | "family">("all");
+  const [viewTab, setViewTab] = useState<"all" | "definitions" | "collocations" | "synonyms" | "examples" | "family">("all");
 
   // LocalStorage for saved words & search history
   const [savedWords, setSavedWords] = useState<Array<{ word: string; cefrLevel?: string; primaryDefinition?: string; savedAt: number }>>(() => {
@@ -250,6 +252,8 @@ export default function App() {
               entry={entry}
               isSaved={isCurrentWordSaved}
               onToggleSave={handleToggleSave}
+              onWordClick={(w) => lookupWord(w)}
+              onViewThesaurus={() => setViewTab("synonyms")}
             />
 
             {/* View Filter Pill Bar */}
@@ -290,6 +294,18 @@ export default function App() {
               </button>
 
               <button
+                onClick={() => setViewTab("synonyms")}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                  viewTab === "synonyms"
+                    ? "bg-emerald-700 text-white shadow-xs"
+                    : "text-stone-600 hover:text-stone-900 hover:bg-stone-200/60"
+                }`}
+              >
+                <Split className="w-3.5 h-3.5 rotate-90" />
+                <span>Synonyms & Thesaurus</span>
+              </button>
+
+              <button
                 onClick={() => setViewTab("examples")}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                   viewTab === "examples"
@@ -326,6 +342,13 @@ export default function App() {
               <CollocationsSection
                 collocations={entry.collocations}
                 word={entry.word}
+              />
+            )}
+
+            {(viewTab === "all" || viewTab === "synonyms") && (
+              <SynonymsSection
+                entry={entry}
+                onWordClick={(w) => lookupWord(w)}
               />
             )}
 

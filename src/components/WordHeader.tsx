@@ -17,6 +17,8 @@ interface WordHeaderProps {
   entry: DictionaryEntry;
   isSaved: boolean;
   onToggleSave: () => void;
+  onWordClick?: (word: string) => void;
+  onViewThesaurus?: () => void;
 }
 
 const CEFR_LABELS: Record<string, { label: string; color: string; bg: string; border: string }> = {
@@ -32,9 +34,19 @@ export const WordHeader: React.FC<WordHeaderProps> = ({
   entry,
   isSaved,
   onToggleSave,
+  onWordClick,
+  onViewThesaurus,
 }) => {
   const [copied, setCopied] = useState(false);
   const [playingAccent, setPlayingAccent] = useState<'US' | 'UK' | null>(null);
+
+  // Extract top unique synonyms for instant header preview
+  const topSynonyms = Array.from(new Set([
+    ...entry.meanings.flatMap(m => [
+      ...(m.synonyms || []),
+      ...m.definitions.flatMap(d => d.synonyms || [])
+    ])
+  ])).filter(w => w && w.toLowerCase() !== entry.word.toLowerCase()).slice(0, 6);
 
   // Locate US & UK audio or general audio
   const usPhonetic = entry.phonetics.find(p => p.accent === 'US' && p.audio);
@@ -182,6 +194,35 @@ export const WordHeader: React.FC<WordHeaderProps> = ({
               <span>UK Audio</span>
             </button>
           </div>
+
+          {/* Quick Synonyms Pill Row */}
+          {topSynonyms.length > 0 && (
+            <div className="mt-4 flex items-center gap-2 flex-wrap text-xs">
+              <span className="font-semibold text-stone-500 uppercase tracking-wider text-[11px] font-mono">
+                Key Synonyms:
+              </span>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {topSynonyms.map((syn) => (
+                  <button
+                    key={syn}
+                    onClick={() => onWordClick?.(syn)}
+                    className="px-2.5 py-1 rounded-md bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200/80 font-medium transition-colors cursor-pointer shadow-2xs"
+                    title={`Lookup synonym "${syn}"`}
+                  >
+                    {syn}
+                  </button>
+                ))}
+                {onViewThesaurus && (
+                  <button
+                    onClick={onViewThesaurus}
+                    className="px-2.5 py-1 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-600 hover:text-stone-900 text-xs font-semibold transition-colors cursor-pointer"
+                  >
+                    + View Thesaurus
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Origin / Etymology preview */}

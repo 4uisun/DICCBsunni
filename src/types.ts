@@ -41,6 +41,12 @@ export interface WordFamily {
   adverb?: string[];
 }
 
+export interface SynonymNuance {
+  word: string;
+  nuance: string;
+  register?: string; // e.g. "Formal", "Academic", "Literary", "Everyday", "Informal"
+}
+
 export interface DictionaryEntry {
   word: string;
   phonetic?: string;
@@ -52,6 +58,7 @@ export interface DictionaryEntry {
   collocations: CollocationCategories;
   wordFamily?: WordFamily;
   usageNotes?: string[];
+  synonymNuances?: SynonymNuance[];
   accreditations: {
     sources: string[];
     license?: { name: string; url: string };

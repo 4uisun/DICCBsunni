@@ -94,6 +94,13 @@ const SEEDED_WORDS: Record<string, DictionaryEntry> = {
       "Collocates heavily with 'build', 'foster', 'demonstrate', and 'boost' rather than 'make'.",
       "In physics and materials science, it specifically denotes the energy absorbed during elastic deformation."
     ],
+    synonymNuances: [
+      { word: "resilience", nuance: "Emphasizes the dynamic ability to bounce back, adapt, and recover rapidly after trauma, disruption, or shock.", register: "Academic / General" },
+      { word: "endurance", nuance: "Focuses on bearing continuous, prolonged hardship, fatigue, or physical pain over a long duration.", register: "General" },
+      { word: "fortitude", nuance: "Denotes moral or spiritual courage and emotional steadfastness in facing adversity or pain.", register: "Literary / Formal" },
+      { word: "tenacity", nuance: "Highlights persistent, stubborn determination and refusal to abandon a purpose or objective.", register: "Formal" },
+      { word: "adaptability", nuance: "Stresses the mental or systemic agility to adjust methods when conditions change.", register: "Professional" }
+    ],
     accreditations: {
       sources: [
         "Oxford Collocations Dictionary for Students of English",
@@ -175,6 +182,12 @@ const SEEDED_WORDS: Record<string, DictionaryEntry> = {
       "Commonly follows verbs like 'stand up to', 'bear', 'withstand', or 'undergo'.",
       "Antonym prefix forms 'inscrutable' (impossible to understand or interpret)."
     ],
+    synonymNuances: [
+      { word: "scrutiny", nuance: "Intensive, critical, and rigorous examination or public observation searching for discrepancies or truth.", register: "Academic / Civic" },
+      { word: "inspection", nuance: "Official or institutional examination to verify compliance, standards, or structural safety.", register: "Formal" },
+      { word: "surveillance", nuance: "Continuous, systematic monitoring of a person, organization, or system, often investigative.", register: "Specialized" },
+      { word: "audit", nuance: "Methodical, formal review of financial accounts, operational procedures, or regulatory records.", register: "Business / Legal" }
+    ],
     accreditations: {
       sources: [
         "Oxford Collocations Dictionary for Students of English",
@@ -253,6 +266,12 @@ const SEEDED_WORDS: Record<string, DictionaryEntry> = {
       "Distinguish between 'collaborate with' (people/organizations) and 'collaborate on' (tasks/projects).",
       "In historical wartime contexts, 'collaborator' carries a negative connotation of aiding an enemy."
     ],
+    synonymNuances: [
+      { word: "collaborate", nuance: "Working jointly and creatively on an intellectual, artistic, or strategic endeavor to achieve a shared vision.", register: "Professional / Academic" },
+      { word: "cooperate", nuance: "Willingly assisting someone else or complying with rules and shared expectations.", register: "General" },
+      { word: "coordinate", nuance: "Organizing different people, schedules, or departments to work harmoniously together.", register: "Organizational" },
+      { word: "partner", nuance: "Establishing an equal, formal alliance or relationship between two entities.", register: "Business" }
+    ],
     accreditations: {
       sources: [
         "Oxford Collocations Dictionary for Students of English",
@@ -326,6 +345,12 @@ const SEEDED_WORDS: Record<string, DictionaryEntry> = {
       "In biology, 'ephemeral' refers to plants or insects that have very short life cycles (e.g. desert ephemerals).",
       "In library science and printing, 'ephemera' refers to collectible items originally meant for short-term use (tickets, posters, pamphlets)."
     ],
+    synonymNuances: [
+      { word: "ephemeral", nuance: "Characterized by an intrinsically fleeting, short-lived duration (like blossoms or viral sensations).", register: "Literary / Academic" },
+      { word: "transient", nuance: "Passing through briefly or remaining in a state or place only temporarily before moving on.", register: "Formal" },
+      { word: "fleeting", nuance: "Passing with extreme swiftness; vanishing almost before it can be registered or caught.", register: "General / Poetic" },
+      { word: "evanescent", nuance: "Fading quickly from memory, sight, or existence like mist or a dissolving vapor.", register: "High Literary" }
+    ],
     accreditations: {
       sources: [
         "Oxford Collocations Dictionary for Students of English",
@@ -390,13 +415,16 @@ Format:
         {
           "definition": "clear concise English definition",
           "example": "natural authentic example sentence",
-          "synonyms": ["syn1", "syn2"],
-          "antonyms": ["ant1"]
+          "synonyms": ["comprehensive list of 4-8 authoritative synonyms"],
+          "antonyms": ["2-4 authoritative antonyms"]
         }
       ],
-      "synonyms": ["syn1", "syn2"],
-      "antonyms": ["ant1"]
+      "synonyms": ["4-8 broad synonyms for this lexical group"],
+      "antonyms": ["2-4 broad antonyms"]
     }
+  ],
+  "synonymNuances": [
+    { "word": "synonym word", "nuance": "precise distinction, connotation, and how it differs from the headword", "register": "Formal" | "Academic" | "Literary" | "Everyday" | "Technical" }
   ],
   "collocations": {
     "verbNoun": [
@@ -471,6 +499,13 @@ Respond strictly with valid JSON only. Ensure accurate definitions, Oxford-grade
         },
         wordFamily: parsed.wordFamily,
         usageNotes: parsed.usageNotes || [],
+        synonymNuances: Array.isArray(parsed.synonymNuances) && parsed.synonymNuances.length > 0
+          ? parsed.synonymNuances.map((n: any) => ({
+              word: n.word || "",
+              nuance: n.nuance || "",
+              register: n.register || "General"
+            }))
+          : undefined,
         accreditations: {
           sources: [
             "Oxford Collocations Dictionary for Students of English",
